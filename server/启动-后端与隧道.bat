@@ -38,7 +38,7 @@ echo.
 echo  ==================================================
 echo   PASTE the public https URL from the cpolar window,
 echo   then press Enter. This auto-updates BASE_URL in all
-echo   3 mini programs (no manual editing needed).
+echo   the mini program (no manual editing needed).
 echo  ==================================================
 echo.
 
@@ -60,7 +60,7 @@ echo  Updating BASE_URL to: %TUNNEL_URL%
 echo.
 
 if not exist "%PATCH_PS%" goto :nopatch
-echo  [patch] running patch_baseurl.ps1 for all 3 mini programs...
+echo  [patch] running patch_baseurl.ps1 for the mini program...
 powershell -NoProfile -ExecutionPolicy Bypass -File "%PATCH_PS%" "%TUNNEL_URL%"
 goto :done
 

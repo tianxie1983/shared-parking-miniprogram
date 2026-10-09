@@ -11,15 +11,14 @@ if (-not $url) {
 # regex: match a single-quoted http(s)://... token inside the JS source
 $re = "'https?://[^'']*'"
 
-# Default: patch all 3 mini programs. If $proj is given, patch only that one.
-$projects = if ($proj) {
-  @($proj)
+# 默认：仅修补本项目的 miniprogram（本脚本位于 server/，miniprogram 为同级目录）。
+# 若显式传入 $proj（目录路径），则仅修补该目录。
+if ($proj) {
+  $projects = @($proj)
 } else {
-  @(
-    "C:\Users\Administrator\WorkBuddy\Claw\共享停车小程序-用户版",
-    "C:\Users\Administrator\WorkBuddy\Claw\共享停车小程序商家端",
-    "C:\Users\Administrator\WorkBuddy\Claw\共享停车小程序"
-  )
+  $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+  $root     = Split-Path -Parent $scriptDir
+  $projects = @(Join-Path $root "miniprogram")
 }
 
 foreach ($p in $projects) {
