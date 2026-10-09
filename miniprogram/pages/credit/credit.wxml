@@ -1,0 +1,32 @@
+<!-- 信用评分页 -->
+<view class="container page-content">
+  <view class="score-card">
+    <view class="score-circle {{creditData.score >= 80 ? 'good' : creditData.score >= 60 ? 'warn' : 'bad'}}">
+      <text class="score-num">{{creditData.score}}</text>
+      <text class="score-label">信用分</text>
+    </view>
+    <text class="score-tip">{{scoreLevel.text}}</text>
+  </view>
+
+  <view class="card">
+    <text class="text-bold" style="font-size: 30rpx;">扣分规则</text>
+    <view class="divider"></view>
+    <view class="rule-row" wx:for="{{penaltyRules}}" wx:key="type">
+      <text class="text-secondary">{{item.label}}</text>
+      <text class="text-danger">-{{item.score}}分</text>
+    </view>
+  </view>
+
+  <view class="card">
+    <text class="text-bold" style="font-size: 30rpx;">信用记录</text>
+    <view class="divider"></view>
+    <empty-state wx:if="{{creditData.records.length === 0}}" icon="⭐" text="暂无扣分记录" />
+    <view class="record-item" wx:for="{{creditData.records}}" wx:key="recordId">
+      <view class="flex-between">
+        <text class="text-danger">-{{-item.scoreChange}}分</text>
+        <text class="text-hint text-sm">{{item.createdAt}}</text>
+      </view>
+      <text class="text-secondary text-sm">{{item.description}}</text>
+    </view>
+  </view>
+</view>

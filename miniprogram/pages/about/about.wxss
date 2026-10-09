@@ -1,0 +1,48 @@
+.about-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60rpx 0 40rpx;
+}
+.about-logo {
+  font-size: 100rpx;
+  margin-bottom: 20rpx;
+}
+.about-name {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: var(--text-primary);
+}
+.about-slogan {
+  font-size: 26rpx;
+  color: var(--text-hint);
+  margin-top: 12rpx;
+  text-align: center;
+}
+.about-version {
+  font-size: 24rpx;
+  color: var(--text-hint);
+  margin-top: 16rpx;
+}
+
+.feature-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 20rpx 0;
+}
+.feature-icon {
+  font-size: 40rpx;
+  margin-right: 20rpx;
+}
+
+.version-item {
+  padding: 16rpx 0;
+}
+
+.about-copyright {
+  display: block;
+  text-align: center;
+  font-size: 24rpx;
+  color: var(--text-hint);
+  padding: 40rpx 0;
+}

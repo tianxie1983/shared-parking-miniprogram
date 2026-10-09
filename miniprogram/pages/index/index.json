@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "找车位",
+  "usingComponents": {
+    "parking-card": "/components/parking-card/parking-card",
+    "empty-state": "/components/empty-state/empty-state"
+  }
+}

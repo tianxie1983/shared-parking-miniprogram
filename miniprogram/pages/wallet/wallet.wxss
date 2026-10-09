@@ -1,0 +1,64 @@
+.wallet-balance {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 6rpx 20rpx rgba(7, 193, 96, 0.25);
+}
+.wallet-amount {
+  margin: 18rpx 0;
+}
+.wallet-amount .price-symbol {
+  color: #fff;
+  font-size: 34rpx;
+}
+.wallet-amount .price-num {
+  color: #fff;
+  font-size: 76rpx;
+  margin-left: 4rpx;
+}
+
+.preset-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20rpx;
+}
+.preset-item {
+  width: calc(33.33% - 14rpx);
+  box-sizing: border-box;
+  text-align: center;
+  padding: 26rpx 0;
+  border: 2rpx solid var(--border);
+  border-radius: 12rpx;
+  font-size: 30rpx;
+  color: var(--text-primary);
+}
+.preset-active {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: #E8F8EF;
+}
+
+.custom-row {
+  display: flex;
+  align-items: center;
+  margin-top: 24rpx;
+  border: 2rpx solid var(--border);
+  border-radius: 12rpx;
+  padding: 0 24rpx;
+  height: 88rpx;
+}
+.custom-input {
+  flex: 1;
+  margin-left: 12rpx;
+  font-size: 30rpx;
+}
+
+.record-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22rpx 0;
+  border-bottom: 1rpx solid var(--border);
+}
+.record-item:last-child {
+  border-bottom: none;
+}

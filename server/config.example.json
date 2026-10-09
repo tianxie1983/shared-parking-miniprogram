@@ -1,0 +1,12 @@
+{
+  "appid": "wx你的小程序AppID",
+  "secret": "你的小程序AppSecret",
+  "vpay": {
+    "offerId": "米大师商户号(offerId)",
+    "appKeyProd": "现网AppKey",
+    "appKeySandbox": "沙箱AppKey",
+    "coinProductId": "在米大师「代币配置」发布的停车币代币ID",
+    "coinUnitPriceFen": 100,
+    "env": 0
+  }
+}

@@ -1,0 +1,77 @@
+/** 预约支付样式 */
+page { padding-bottom: 160rpx; }
+
+.summary-img {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: var(--radius);
+  flex-shrink: 0;
+  background: #f0f0f0;
+}
+
+.picker-field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx;
+  background: #f9f9f9;
+  border-radius: var(--radius);
+  font-size: 28rpx;
+}
+
+.time-row {
+  margin-bottom: 20rpx;
+}
+.time-label {
+  font-size: 26rpx;
+  color: var(--text-secondary);
+  margin-bottom: 10rpx;
+  display: block;
+}
+
+.duration-hint {
+  text-align: center;
+  padding: 16rpx;
+  background: #E8F8EF;
+  border-radius: var(--radius);
+  color: var(--primary);
+  font-size: 26rpx;
+  margin-top: 20rpx;
+}
+
+.fee-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16rpx 0;
+  border-bottom: 1rpx solid #f5f5f5;
+}
+.fee-row:last-child { border-bottom: none; font-weight: bold; padding-top: 20rpx; }
+
+.notice-card {
+  background: #FFF8E8;
+  border-radius: var(--radius);
+  padding: 24rpx;
+  margin-top: 20rpx;
+}
+.notice-list {
+  margin-top: 12rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 30rpx;
+  padding-bottom: calc(20rpx + env(safe-area-inset-bottom));
+  background: var(--bg-card);
+  box-shadow: 0 -2rpx 12rpx rgba(0,0,0,0.05);
+  z-index: 100;
+}

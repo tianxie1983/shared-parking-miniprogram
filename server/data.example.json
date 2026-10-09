@@ -1,0 +1,112 @@
+{
+  "users": {
+    "user": {
+      "userId": 10001,
+      "realName": "",
+      "idCard": "",
+      "phone": "",
+      "isAuth": false,
+      "creditScore": 100,
+      "status": 0,
+      "balanceFen": 0
+    },
+    "merchant": {
+      "userId": 20001,
+      "realName": "",
+      "idCard": "",
+      "phone": "",
+      "isAuth": false,
+      "creditScore": 100,
+      "status": 0,
+      "balanceFen": 0
+    }
+  },
+  "tokens": {},
+  "openidUsers": {},
+  "pendingSpaces": [],
+  "approvedSpaces": [
+    {
+      "spaceId": 1786603138622,
+      "ownerId": 10001,
+      "ownerName": "董女士",
+      "ownerPhone": "",
+      "auditStatus": 1,
+      "status": 1,
+      "rating": 5,
+      "orderCount": 0,
+      "successRate": 1,
+      "distance": "0km",
+      "tags": ["新上架"],
+      "photos": [],
+      "propertyCert": "待上传",
+      "pricePerHour": 0.5,
+      "submitTime": "2026-08-13 14:38",
+      "communityName": "董家小院",
+      "locationDetail": "院内",
+      "address": "陕西省延安市",
+      "longitude": 109.49303,
+      "latitude": 36.59141,
+      "schedules": [
+        { "weekday": 1, "startTime": "00:00", "endTime": "23:59", "pricePerHour": 0.5, "enabled": true },
+        { "weekday": 2, "startTime": "00:00", "endTime": "23:59", "pricePerHour": 0.5, "enabled": true },
+        { "weekday": 3, "startTime": "00:00", "endTime": "23:59", "pricePerHour": 0.5, "enabled": true },
+        { "weekday": 4, "startTime": "00:00", "endTime": "23:59", "pricePerHour": 0.5, "enabled": true },
+        { "weekday": 5, "startTime": "00:00", "endTime": "23:59", "pricePerHour": 0.5, "enabled": true }
+      ]
+    },
+    {
+      "spaceId": 1786498508235,
+      "ownerId": 20001,
+      "ownerName": "马瑞",
+      "ownerPhone": "",
+      "auditStatus": 1,
+      "status": 1,
+      "rating": 5,
+      "orderCount": 0,
+      "successRate": 1,
+      "distance": "0km",
+      "tags": ["新上架"],
+      "photos": [],
+      "propertyCert": "待上传",
+      "pricePerHour": 0.5,
+      "submitTime": "2026-08-12 09:35",
+      "communityName": "液化气站",
+      "locationDetail": "地面",
+      "address": "陕西省延安市宝塔区K22路",
+      "longitude": 109.55966186523438,
+      "latitude": 36.668846130371094,
+      "schedules": [
+        { "weekday": 1, "startTime": "00:00", "endTime": "23:59", "pricePerHour": 0.5, "enabled": true }
+      ]
+    },
+    {
+      "spaceId": 1786078918268,
+      "ownerId": 10001,
+      "ownerName": "董女士",
+      "ownerPhone": "",
+      "auditStatus": 1,
+      "status": 1,
+      "rating": 5,
+      "orderCount": 0,
+      "successRate": 1,
+      "distance": "0km",
+      "tags": ["新上架"],
+      "photos": [],
+      "propertyCert": "待上传",
+      "pricePerHour": 2,
+      "submitTime": "2026-08-07 13:01",
+      "communityName": "雅荷小区",
+      "locationDetail": "地面",
+      "address": "文化沟",
+      "longitude": 113.264435,
+      "latitude": 23.129163,
+      "schedules": [
+        { "weekday": 1, "startTime": "10:01", "endTime": "14:01", "pricePerHour": 2, "enabled": true }
+      ]
+    }
+  ],
+  "orders": [],
+  "complaints": [],
+  "creditRecords": [],
+  "coinOrders": []
+}

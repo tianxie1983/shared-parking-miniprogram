@@ -1,0 +1,54 @@
+.container { min-height: 100vh; background: var(--bg-page); }
+
+/* 搜索头部 */
+.search-header {
+  display: flex;
+  align-items: center;
+  padding: 16rpx 24rpx;
+  background: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.search-input-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  background: var(--bg-page);
+  border-radius: 32rpx;
+  padding: 12rpx 24rpx;
+}
+.search-icon { font-size: 28rpx; margin-right: 12rpx; }
+.search-input { flex: 1; font-size: 28rpx; }
+.search-clear { font-size: 28rpx; color: var(--text-hint); padding-left: 12rpx; }
+.search-cancel { color: var(--primary); font-size: 28rpx; padding-left: 24rpx; }
+
+/* 搜索历史 */
+.history-section, .hot-section {
+  padding: 30rpx 24rpx;
+}
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+.history-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+  margin-top: 12rpx;
+}
+.history-tag {
+  background: #fff;
+  border-radius: 28rpx;
+  padding: 12rpx 28rpx;
+  font-size: 26rpx;
+  color: var(--text-secondary);
+}
+
+/* 搜索结果 */
+.result-section { padding: 0 24rpx; }
+.result-header {
+  padding: 20rpx 0;
+}

@@ -1,0 +1,63 @@
+/** 首页样式 */
+.search-bar {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 30rpx;
+  background: var(--bg-card);
+  gap: 16rpx;
+}
+.search-input {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  height: 72rpx;
+  background: #f5f5f5;
+  border-radius: 36rpx;
+  padding: 0 24rpx;
+}
+.search-icon { font-size: 28rpx; margin-right: 12rpx; }
+.search-placeholder { color: var(--text-hint); font-size: 26rpx; }
+.view-toggle {
+  width: 72rpx;
+  height: 72rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f5f5;
+  border-radius: 50%;
+}
+.toggle-icon { font-size: 36rpx; }
+
+/* 筛选栏 */
+.filter-bar {
+  display: flex;
+  align-items: center;
+  padding: 16rpx 30rpx;
+  background: var(--bg-card);
+  gap: 12rpx;
+  border-bottom: 1rpx solid var(--border);
+}
+.filter-item {
+  padding: 10rpx 24rpx;
+  border-radius: 28rpx;
+  background: #f5f5f5;
+  font-size: 24rpx;
+  color: var(--text-secondary);
+}
+.filter-item.active {
+  background: #E8F8EF;
+  color: var(--primary);
+}
+
+/* 列表 */
+.parking-list {
+  height: calc(100vh - 280rpx - env(safe-area-inset-bottom));
+  padding: 20rpx 30rpx;
+  box-sizing: border-box;
+}
+
+/* 地图 */
+.parking-map {
+  width: 100%;
+  height: calc(100vh - 220rpx - env(safe-area-inset-bottom));
+}

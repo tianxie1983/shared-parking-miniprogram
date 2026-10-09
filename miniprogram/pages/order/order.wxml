@@ -1,0 +1,163 @@
+<!--
+  订单详情页
+  对应方案：四.数据库核心表设计 - 4.4 订单表
+  状态机：0-待支付 1-待入场 2-停车中 3-已完成 4-已取消 5-争议中
+-->
+<view class="container page-content">
+  <!-- 订单状态卡片 -->
+  <view class="status-card status-{{order.orderStatus}}">
+    <text class="status-icon">{{statusConfig.icon}}</text>
+    <text class="status-text">{{statusConfig.text}}</text>
+    <text class="status-desc">{{statusConfig.desc}}</text>
+  </view>
+
+  <!-- 车位信息 -->
+  <view class="card">
+    <text class="text-bold" style="font-size: 30rpx;">车位信息</text>
+    <view class="divider"></view>
+    <view class="flex">
+      <image src="{{order.image}}" mode="aspectFill" class="order-img" />
+      <view class="flex-1" style="margin-left: 20rpx;">
+        <text class="text-bold">{{order.communityName}}</text>
+        <view class="flex mt-20">
+          <text class="text-secondary text-sm">📍 {{order.locationDetail}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 预约信息 -->
+  <view class="card">
+    <text class="text-bold" style="font-size: 30rpx;">预约信息</text>
+    <view class="divider"></view>
+    <view class="info-row">
+      <text class="text-secondary">预约时间</text>
+      <text>{{order.startTime}} ~ {{order.endTime}}</text>
+    </view>
+    <view class="info-row" wx:if="{{order.actualStart}}">
+      <text class="text-secondary">实际入场</text>
+      <text>{{order.actualStart}}</text>
+    </view>
+    <view class="info-row" wx:if="{{order.actualEnd}}">
+      <text class="text-secondary">实际离场</text>
+      <text>{{order.actualEnd}}</text>
+    </view>
+    <view class="info-row">
+      <text class="text-secondary">订单编号</text>
+      <text class="text-sm">{{order.orderId}}</text>
+    </view>
+  </view>
+
+  <!-- 费用信息 -->
+  <view class="card">
+    <text class="text-bold" style="font-size: 30rpx;">费用信息</text>
+    <view class="divider"></view>
+    <view class="info-row">
+      <text class="text-secondary">预付停车费</text>
+      <text>¥{{order.amountFixed}}</text>
+    </view>
+    <view class="info-row" wx:if="{{order.orderStatus >= 3}}">
+      <text class="text-secondary">实际停车费</text>
+      <text>¥{{order.actualParkingFeeFixed}}</text>
+    </view>
+    <view class="info-row" wx:if="{{order.reserveFee > 0 && order.orderStatus === 3}}">
+      <text class="text-success">占座诚意金（已原路退还）</text>
+      <text class="text-success">¥{{order.reserveFeeFixed}}</text>
+    </view>
+    <view class="info-row" wx:elif="{{order.reserveFee > 0 && order.orderStatus === 4 && order.forfeited}}">
+      <text class="text-danger">占座诚意金（爽约罚没）</text>
+      <text class="text-danger">¥{{order.reserveFeeFixed}}</text>
+    </view>
+    <view class="info-row" wx:elif="{{order.reserveFee > 0 && order.orderStatus === 4 && order.refunded}}">
+      <text class="text-success">占座诚意金（已原路退还）</text>
+      <text class="text-success">¥{{order.reserveFeeFixed}}</text>
+    </view>
+    <view class="info-row" wx:elif="{{order.reserveFee > 0}}">
+      <text class="text-secondary">占座诚意金（可退押金）</text>
+      <text class="text-secondary">¥{{order.reserveFeeFixed}}</text>
+    </view>
+    <view class="info-row" wx:if="{{order.earlyFee > 0}}">
+      <text class="text-warning">提前到达加价</text>
+      <text class="text-warning">+¥{{order.earlyFeeFixed}}</text>
+    </view>
+    <view class="info-row" wx:if="{{order.penaltyAmount > 0}}">
+      <text class="text-danger">超时违约金（双倍计费）</text>
+      <text class="text-danger">¥{{order.penaltyAmountFixed}}</text>
+    </view>
+    <!-- 多退少补 -->
+    <view class="info-row" wx:if="{{order.refundAmount > 0}}">
+      <text class="text-success">多退（含诚意金原路退还）</text>
+      <text class="text-success">-¥{{order.refundAmountFixed}}</text>
+    </view>
+    <view class="info-row" wx:if="{{order.extraAmount > 0}}">
+      <text class="text-danger">少补（超时/超停补缴）</text>
+      <text class="text-danger">+¥{{order.extraAmountFixed}}</text>
+    </view>
+    <view class="info-row" wx:if="{{order.orderStatus === 4 && order.refunded}}">
+      <text class="text-success">已退款（诚意金+预付停车费）</text>
+      <text class="text-success">¥{{order.refundAmountFixed}}</text>
+    </view>
+    <view class="info-row" style="font-weight: bold;">
+      <text>结算合计（车位主实收）</text>
+      <text class="price text-lg">¥{{order.settledAmountFixed}}</text>
+    </view>
+  </view>
+
+  <!-- 车位主信息 -->
+  <view class="card">
+    <text class="text-bold" style="font-size: 30rpx;">车位主</text>
+    <view class="divider"></view>
+    <view class="flex-between">
+      <text class="text-secondary">{{order.ownerName}}</text>
+      <button class="btn btn-ghost btn-sm" open-type="contact" wx:if="{{order.orderStatus >= 1}}">
+        联系车位主
+      </button>
+    </view>
+  </view>
+
+  <!-- 操作按钮区域 -->
+  <view class="action-area" wx:if="{{showActions}}">
+    <!-- 待支付 -->
+    <button wx:if="{{order.orderStatus === 0}}" class="btn btn-primary btn-block mb-20"
+      bindtap="onPay">去支付</button>
+
+    <!-- 待入场 -->
+    <button wx:if="{{order.orderStatus === 1}}" class="btn btn-primary btn-block mb-20"
+      bindtap="onConfirmEnter">确认入场（远程开闸）</button>
+
+    <!-- 停车中 -->
+    <button wx:if="{{order.orderStatus === 2}}" class="btn btn-primary btn-block mb-20"
+      bindtap="onConfirmExit">确认离场（远程开闸）</button>
+
+    <!-- 已完成/停车中 -> 可投诉或查看投诉 -->
+    <button wx:if="{{order.orderStatus >= 2 && order.complaintFlag === 0}}"
+      class="btn btn-outline btn-block mb-20" bindtap="onComplaint">投诉与纠纷</button>
+    <button wx:if="{{order.complaintFlag === 1}}"
+      class="btn btn-outline btn-block mb-20" bindtap="onViewComplaints">查看投诉记录</button>
+
+    <!-- 超时警告提示 -->
+    <view wx:if="{{isNearOvertime && order.orderStatus === 2}}" class="overtime-warning">
+      ⚠️ 您的停车即将超时，超时将按双倍计费并扣信用分！
+    </view>
+
+    <view wx:if="{{order.isOvertime === 1}}" class="overtime-warning overtime-danger">
+      ⚠️ 已超时！超时部分按双倍计费，信用分已扣减。
+    </view>
+
+    <!-- 投诉处理中提示 -->
+    <view wx:if="{{order.complaintFlag === 1}}" class="overtime-warning" style="background:#fff3e0;border-color:#FF9800;color:#E65100;">
+      ⚠️ 您已提交投诉，商家正在处理中，可在"投诉记录"查看进度。
+    </view>
+  </view>
+
+  <!-- 取消按钮 -->
+  <view class="text-center mt-30" wx:if="{{order.orderStatus === 0 || order.orderStatus === 1}}">
+    <text class="text-hint" bindtap="onCancel">取消订单</text>
+  </view>
+</view>
+
+<!-- 底部计时器（停车中） -->
+<view class="parking-timer" wx:if="{{order.orderStatus === 2}}">
+  <text class="timer-label">停车中</text>
+  <text class="timer-count">{{parkingDuration}}</text>
+</view>

@@ -1,0 +1,92 @@
+<!--
+  帮助与反馈
+-->
+<view class="container page-content">
+  <!-- 常见问题 -->
+  <view class="card">
+    <text class="text-bold text-lg">常见问题</text>
+    <view class="divider"></view>
+
+    <view class="faq-item" wx:for="{{faqList}}" wx:key="id" bindtap="onToggleFaq" data-id="{{item.id}}">
+      <view class="flex-between">
+        <text class="text-bold">{{item.question}}</text>
+        <text class="text-hint">{{item.open ? '▲' : '▼'}}</text>
+      </view>
+      <view wx:if="{{item.open}}" class="faq-answer">
+        <text class="text-secondary text-sm">{{item.answer}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 使用指南 -->
+  <view class="card">
+    <text class="text-bold text-lg">使用指南</text>
+    <view class="divider"></view>
+    <view class="guide-item">
+      <text class="guide-icon">1️⃣</text>
+      <view class="flex-1">
+        <text class="text-bold text-sm">寻找车位</text>
+        <view class="mt-10">
+          <text class="text-hint text-sm">在首页通过定位自动推荐附近车位，也可使用搜索功能按小区名查找。</text>
+        </view>
+      </view>
+    </view>
+    <view class="guide-item">
+      <text class="guide-icon">2️⃣</text>
+      <view class="flex-1">
+        <text class="text-bold text-sm">预约停车</text>
+        <view class="mt-10">
+          <text class="text-hint text-sm">选择车位和时段后确认预约，系统会自动锁定时段防止冲突。</text>
+        </view>
+      </view>
+    </view>
+    <view class="guide-item">
+      <text class="guide-icon">3️⃣</text>
+      <view class="flex-1">
+        <text class="text-bold text-sm">到场停车</text>
+        <view class="mt-10">
+          <text class="text-hint text-sm">到达后在订单页点击"确认到场"，离场时点击"确认离场"完成结算。</text>
+        </view>
+      </view>
+    </view>
+    <view class="guide-item">
+      <text class="guide-icon">4️⃣</text>
+      <view class="flex-1">
+        <text class="text-bold text-sm">信用评分</text>
+        <view class="mt-10">
+          <text class="text-hint text-sm">按时到场和离场可保持信用分，超时或爽约会扣分。信用分低于60分将限制预约。</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 意见反馈 -->
+  <view class="card">
+    <text class="text-bold text-lg">意见反馈</text>
+    <view class="divider"></view>
+    <view class="feedback-type">
+      <view class="feedback-tag {{feedbackType === 'bug' ? 'active' : ''}}" bindtap="onSelectType" data-type="bug">功能异常</view>
+      <view class="feedback-tag {{feedbackType === 'suggest' ? 'active' : ''}}" bindtap="onSelectType" data-type="suggest">功能建议</view>
+      <view class="feedback-tag {{feedbackType === 'other' ? 'active' : ''}}" bindtap="onSelectType" data-type="other">其他</view>
+    </view>
+    <textarea class="feedback-textarea" placeholder="请详细描述您遇到的问题或建议（至少10字）"
+      value="{{feedbackContent}}" bindinput="onFeedbackInput" maxlength="500" />
+    <view class="flex-between mt-20">
+      <text class="text-hint text-sm">{{feedbackContent.length}}/500</text>
+      <button class="btn btn-primary btn-sm" bindtap="onSubmitFeedback">提交反馈</button>
+    </view>
+  </view>
+
+  <!-- 联系客服 -->
+  <view class="card flex-between" bindtap="onContactService">
+    <view>
+      <text class="text-bold">联系客服</text>
+      <view class="mt-10">
+        <text class="text-hint text-sm">工作时间：周一至周日 8:00-20:00</text>
+      </view>
+    </view>
+    <text class="text-hint">➤</text>
+  </view>
+
+  <view style="height: 60rpx;"></view>
+</view>

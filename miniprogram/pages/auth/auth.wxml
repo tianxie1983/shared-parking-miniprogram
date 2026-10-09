@@ -1,0 +1,50 @@
+<!-- 实名认证页 -->
+<view class="container page-content">
+  <view class="card" style="text-align: center;">
+    <text class="text-lg text-bold">实名认证</text>
+    <view class="divider"></view>
+    <text class="text-secondary">请提交真实信息，通过审核后方可发布车位</text>
+  </view>
+
+  <view class="card">
+    <view class="form-item">
+      <text class="form-label">真实姓名</text>
+      <input class="form-input" placeholder="请输入真实姓名" value="{{form.realName}}" bindinput="onInput" data-field="realName" />
+    </view>
+    <view class="form-item">
+      <text class="form-label">身份证号</text>
+      <input class="form-input" type="idcard" placeholder="请输入身份证号" value="{{form.idCard}}" bindinput="onInput" data-field="idCard" />
+    </view>
+    <view class="form-item">
+      <text class="form-label">身份证正面</text>
+      <view class="upload-row">
+        <view class="upload-item" wx:if="{{form.idCardFront}}">
+          <image src="{{form.idCardFront}}" mode="aspectFill" class="upload-img" />
+        </view>
+        <view class="upload-item upload-add" wx:else bindtap="onChooseIdCard" data-type="front">
+          <text class="upload-icon">+</text>
+        </view>
+      </view>
+    </view>
+    <view class="form-item">
+      <text class="form-label">车位产权/租赁证明</text>
+      <view class="upload-row">
+        <view class="upload-item" wx:if="{{form.propertyCert}}">
+          <image src="{{form.propertyCert}}" mode="aspectFill" class="upload-img" />
+        </view>
+        <view class="upload-item upload-add" wx:else bindtap="onChooseProperty" data-type="property">
+          <text class="upload-icon">+</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="notice-card">
+    <text class="text-bold text-sm">🔒 隐私保护</text>
+    <text class="text-hint text-sm">您的身份信息经加密存储，仅用于实名认证审核，不会向第三方泄露。</text>
+  </view>
+
+  <button class="btn btn-primary btn-block mt-30" disabled="{{!canSubmit}}" bindtap="onSubmit">
+    提交审核
+  </button>
+</view>

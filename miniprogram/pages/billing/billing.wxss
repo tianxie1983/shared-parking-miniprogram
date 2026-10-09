@@ -1,0 +1,20 @@
+/* 计费说明规则页 */
+.intro-card {
+  background: linear-gradient(135deg, #07C160 0%, #09AD56 100%);
+}
+.intro-card .text-bold,
+.intro-card .text-secondary {
+  color: #ffffff;
+}
+.intro-card .text-secondary {
+  opacity: 0.92;
+}
+.tip-card {
+  background: #f7f8fa;
+}
+.text-base {
+  font-size: 30rpx;
+}
+.text-xs {
+  font-size: 22rpx;
+}

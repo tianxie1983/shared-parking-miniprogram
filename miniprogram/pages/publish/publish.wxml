@@ -1,0 +1,119 @@
+<!--
+  发布车位页（用户版）
+  优化：支持全周时段、全天候时间、批量设置
+-->
+<view class="container page-content">
+  <!-- 认证提醒 -->
+  <view class="card" wx:if="{{!isAuth}}">
+    <view class="flex-between">
+      <view>
+        <text class="text-bold">⚠️ 请先完成实名认证</text>
+        <view class="mt-10"><text class="text-hint text-sm">需上传身份证+车位产权证明</text></view>
+      </view>
+      <button class="btn btn-outline btn-sm" bindtap="onGoAuth">去认证</button>
+    </view>
+  </view>
+
+  <!-- 发布表单 -->
+  <block wx:if="{{isAuth}}">
+    <!-- 小区信息 -->
+    <view class="card">
+      <text class="text-bold" style="font-size: 30rpx;">基本信息</text>
+      <view class="divider"></view>
+      <view class="form-item">
+        <text class="form-label">小区名称</text>
+        <input class="form-input" placeholder="如：阳光花园小区" value="{{form.communityName}}"
+          bindinput="onInput" data-field="communityName" />
+      </view>
+      <view class="form-item">
+        <text class="form-label">位置描述</text>
+        <input class="form-input" placeholder="如：B1层A区128号" value="{{form.locationDetail}}"
+          bindinput="onInput" data-field="locationDetail" />
+      </view>
+      <view class="form-item">
+        <text class="form-label">详细地址</text>
+        <view class="flex" style="align-items: center;">
+          <input class="form-input flex-1" placeholder="如：延安市宝塔区中心街88号" value="{{form.address}}"
+            bindinput="onInput" data-field="address" />
+          <button class="btn btn-outline btn-sm" style="margin-left: 16rpx; flex-shrink: 0;" bindtap="onChooseLocation">选址</button>
+        </view>
+        <text class="text-hint text-sm" wx:if="{{form.longitude}}" style="display:block;margin-top:8rpx;">已定位，可在地图查看</text>
+      </view>
+    </view>
+
+    <!-- 共享时段与价格 -->
+    <view class="card">
+      <text class="text-bold" style="font-size: 30rpx;">共享时段与价格</text>
+      <text class="text-hint text-sm" style="display:block;margin-top:8rpx;">点击左侧圆圈启用/禁用某天</text>
+      <view class="divider"></view>
+
+      <!-- 批量设置快捷按钮 -->
+      <view class="batch-row">
+        <text class="text-hint text-sm">批量设置启用天：</text>
+        <view class="batch-btn" bindtap="onBatchSetTime" data-start="00:00" data-end="23:59">全天</view>
+        <view class="batch-btn" bindtap="onBatchSetTime" data-start="08:00" data-end="18:00">白天</view>
+        <view class="batch-btn" bindtap="onBatchSetTime" data-start="18:00" data-end="23:59">夜间</view>
+      </view>
+
+      <view class="schedule-row" wx:for="{{form.schedules}}" wx:key="weekday">
+        <!-- 启用/禁用切换 -->
+        <view class="day-toggle {{item.enabled ? 'enabled' : ''}}" bindtap="onToggleDay" data-index="{{index}}">
+          <text class="day-check">{{item.enabled ? '✓' : ''}}</text>
+        </view>
+        <text class="text-bold {{item.enabled ? '' : 'text-hint'}}" style="width: 80rpx;">{{weekdayMap[item.weekday]}}</text>
+        <picker mode="time" value="{{item.startTime}}" start="00:00" end="23:59"
+          bindchange="onScheduleChange" data-index="{{index}}" data-field="startTime" disabled="{{!item.enabled}}">
+          <view class="time-picker {{item.enabled ? '' : 'disabled'}}">
+            <text class="{{item.startTime ? '' : 'text-hint'}}">{{item.startTime || '开始'}}</text>
+          </view>
+        </picker>
+        <text class="text-hint">—</text>
+        <picker mode="time" value="{{item.endTime}}" start="{{item.startTime || '00:00'}}" end="23:59"
+          bindchange="onScheduleChange" data-index="{{index}}" data-field="endTime" disabled="{{!item.enabled}}">
+          <view class="time-picker {{item.enabled ? '' : 'disabled'}}">
+            <text class="{{item.endTime ? '' : 'text-hint'}}">{{item.endTime || '结束'}}</text>
+          </view>
+        </picker>
+      </view>
+
+      <view class="divider"></view>
+      <view class="form-item">
+        <text class="form-label">每小时价格 (¥)</text>
+        <input class="form-input" type="digit" placeholder="如：3.00" value="{{priceInput}}"
+          bindinput="onPriceInput" />
+      </view>
+    </view>
+
+    <!-- 上传图片 -->
+    <view class="card">
+      <text class="text-bold" style="font-size: 30rpx;">车位照片</text>
+      <view class="divider"></view>
+      <view class="upload-row">
+        <view class="upload-item" wx:for="{{form.photos}}" wx:key="*this" bindtap="onPreviewImage" data-url="{{item}}">
+          <image src="{{item}}" mode="aspectFill" class="upload-img" />
+        </view>
+        <view class="upload-item upload-add" wx:if="{{form.photos.length < 6}}" bindtap="onChooseImage">
+          <text class="upload-icon">+</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 注意事项 -->
+    <view class="notice-card" style="margin-bottom: 100rpx;">
+      <text class="text-bold">发布须知</text>
+      <view class="mt-20">
+        <text class="text-hint text-sm">• 提交后需平台审核，1-2个工作日内完成</text>
+        <text class="text-hint text-sm">• 请上传真实的产权或租赁证明</text>
+        <text class="text-hint text-sm">• 虚假信息将导致账号冻结</text>
+        <text class="text-hint text-sm">• 启用需要开放的日期，未启用的日期不可预约</text>
+      </view>
+    </view>
+  </block>
+
+  <!-- 固定底部按钮 -->
+  <view class="bottom-bar" wx:if="{{isAuth}}">
+    <button class="btn btn-primary btn-block" disabled="{{!canSubmit}}" bindtap="onSubmit">
+      提交审核
+    </button>
+  </view>
+</view>

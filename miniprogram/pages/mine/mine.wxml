@@ -1,0 +1,102 @@
+<!--
+  个人中心（用户纯享版）
+  仅用户功能，无角色切换
+-->
+<view class="container page-content--tabbar">
+  <!-- 头像区域 -->
+  <view class="profile-card card">
+    <view class="flex">
+      <view class="avatar">
+        <text>👤</text>
+      </view>
+      <view class="flex-1" style="margin-left: 24rpx;">
+        <text class="text-bold" style="font-size: 34rpx;">{{userInfo.realName || userInfo.nickName || '未命名用户'}}</text>
+        <view class="mt-10">
+          <text class="text-secondary text-sm">{{userInfo.phone || '未绑定手机'}}</text>
+        </view>
+      </view>
+      <button class="btn btn-ghost btn-sm" wx:if="{{!isAuth}}" bindtap="onGoAuth">实名认证</button>
+      <text class="tag tag-green" wx:if="{{isAuth}}">已认证</text>
+    </view>
+    <!-- 信用分 -->
+    <view class="credit-bar" bindtap="onGoCredit">
+      <view class="flex-between">
+        <text class="text-secondary">信用评分</text>
+        <view class="flex-center">
+          <text class="credit-score {{creditScore >= 80 ? 'text-success' : creditScore >= 60 ? 'text-warning' : 'text-danger'}}"
+            style="font-size: 48rpx; font-weight: bold;">{{creditScore}}</text>
+          <text class="text-hint text-sm" style="margin-left: 8rpx;">/100</text>
+        </view>
+      </view>
+      <view class="flex-between mt-10">
+        <text class="tag tag-red" wx:if="{{creditScore < 60}}">限制预约</text>
+        <text class="tag tag-yellow" wx:elif="{{creditScore < 80}}">良好</text>
+        <text class="tag tag-green" wx:else>优秀</text>
+        <text class="text-hint text-sm">查看详情 ➤</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 用户功能菜单 -->
+  <view class="card menu-card">
+    <view class="menu-item" bindtap="onGoWallet">
+      <text>💰 我的钱包（停车币）</text>
+      <text class="text-success text-bold">¥{{balanceText}} ➤</text>
+    </view>
+    <view class="menu-item" bindtap="onTapMenuItem" data-page="my-spaces">
+      <text>🏠 我的车位</text>
+      <text class="text-hint">➤</text>
+    </view>
+    <view class="menu-item" bindtap="onTapMenuItem" data-page="my-parked">
+      <text>🅿️ 我停的车位</text>
+      <text class="text-hint">➤</text>
+    </view>
+    <view class="menu-item" bindtap="onTapMenuItem" data-page="complaint-list">
+      <text>📋 投诉记录</text>
+      <text class="text-hint">➤</text>
+    </view>
+    <view class="menu-item" bindtap="onTapMenuItem" data-page="credit">
+      <text>⭐ 信用记录</text>
+      <text class="text-hint">➤</text>
+    </view>
+    <view class="menu-item" bindtap="onTapMenuItem" data-page="billing">
+      <text>💰 计费说明规则</text>
+      <text class="text-hint">➤</text>
+    </view>
+    <view class="menu-item" bindtap="onTapMenuItem" data-page="advance">
+      <text>🚀 进阶：微信登录 + 地图选点</text>
+      <text class="text-hint">➤</text>
+    </view>
+    <view class="menu-item" bindtap="onTapMenuItem" data-page="help">
+      <text>❓ 帮助与反馈</text>
+      <text class="text-hint">➤</text>
+    </view>
+    <view class="menu-item" bindtap="onTapMenuItem" data-page="about">
+      <text>ℹ️ 关于我们</text>
+      <text class="text-hint">➤</text>
+    </view>
+  </view>
+
+  <!-- 策略说明 -->
+  <view class="card">
+    <text class="text-bold" style="font-size: 26rpx;">📋 信用规则说明</text>
+    <view class="divider"></view>
+    <view class="rule-item">
+      <text class="text-danger text-sm">超时占用 -10分/次</text>
+    </view>
+    <view class="rule-item">
+      <text class="text-danger text-sm">爽约（未到场） -15分/次</text>
+    </view>
+    <view class="rule-item">
+      <text class="text-danger text-sm">投诉成立 -30分</text>
+    </view>
+    <view class="rule-item mt-10">
+      <text class="text-hint text-sm">信用分&lt;60：限制预约</text>
+    </view>
+    <view class="rule-item">
+      <text class="text-hint text-sm">信用分&lt;40：冻结账号</text>
+    </view>
+  </view>
+
+  <view style="height: 60rpx;"></view>
+</view>

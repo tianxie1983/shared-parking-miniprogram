@@ -1,0 +1,43 @@
+<!-- 我的钱包（停车币 · 代币模式） -->
+<view class="container page-content">
+  <!-- 余额卡片 -->
+  <view class="card wallet-balance">
+    <text class="text-sm" style="opacity:.9;">停车币余额（元）</text>
+    <view class="wallet-amount">
+      <text class="price-symbol">¥</text>
+      <text class="price-num">{{balanceText}}</text>
+    </view>
+    <text class="text-sm" style="opacity:.85;display:block;">先充值停车币，预约时自动从余额抵扣</text>
+  </view>
+
+  <!-- 充值金额 -->
+  <view class="card">
+    <text class="text-bold" style="font-size:28rpx;">充值金额</text>
+    <view class="divider"></view>
+    <view class="preset-wrap">
+      <view wx:for="{{presets}}" wx:key="fen"
+            class="preset-item {{customYuan == item.yuan ? 'preset-active' : ''}}"
+            bindtap="onPresetTap" data-fen="{{item.fen}}">¥{{item.yuan}}</view>
+    </view>
+    <view class="custom-row">
+      <text class="price-symbol">¥</text>
+      <input class="custom-input" type="digit" placeholder="自定义金额" value="{{customYuan}}" bindinput="onCustomInput" />
+    </view>
+    <button class="btn btn-primary btn-block mt-30" bindtap="onRecharge" disabled="{{paying}}">确认充值（微信支付）</button>
+    <text class="text-hint text-sm mt-20" style="display:block;">* 充值走微信小程序虚拟支付（代币模式 short_series_coin），未配置密钥时以演示模式直接到账。</text>
+  </view>
+
+  <!-- 充值记录 -->
+  <view class="card">
+    <text class="text-bold" style="font-size:28rpx;">充值记录</text>
+    <view class="divider"></view>
+    <view wx:if="{{coinOrders.length === 0}}" class="empty-text" style="padding:40rpx 0;">暂无充值记录</view>
+    <view wx:for="{{coinOrders}}" wx:key="orderId" class="record-item">
+      <view class="flex-1">
+        <text class="text-primary">充值 ¥{{item.amountText}}</text>
+        <text class="text-hint text-sm" style="display:block;margin-top:4rpx;">{{item.timeText}}</text>
+      </view>
+      <text class="tag {{item.status === 1 ? 'tag-green' : 'tag-yellow'}}">{{item.statusText}}</text>
+    </view>
+  </view>
+</view>

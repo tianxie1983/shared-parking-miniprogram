@@ -1,0 +1,154 @@
+<!--
+  预约支付页
+  对应方案：三.MVP核心功能清单 - 3.1 在线支付
+  核心机制：支付-离场双重确认（支付异步通知 + 前端轮询）
+-->
+<view class="container page-content">
+  <!-- 车位摘要 -->
+  <view class="card">
+    <view class="flex">
+      <image src="{{space.photos[0]}}" mode="aspectFill" class="summary-img" />
+      <view class="flex-1" style="margin-left: 20rpx;">
+        <text class="text-bold" style="font-size: 30rpx;">{{space.communityName}}</text>
+        <view class="flex mt-20">
+          <text class="text-secondary text-sm">📍 {{space.locationDetail}}</text>
+        </view>
+        <text class="tag tag-green" wx:if="{{space.auditStatus === 1}}">已认证</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 日期选择 -->
+  <view class="card">
+    <text class="text-bold" style="font-size: 30rpx;">预约日期</text>
+    <view class="divider"></view>
+    <picker mode="date" value="{{bookingDate}}" start="{{today}}" bindchange="onDateChange">
+      <view class="picker-field">
+        <text class="{{bookingDate ? '' : 'text-hint'}}">
+          {{bookingDate || '请选择日期'}}
+        </text>
+        <text>📅</text>
+      </view>
+    </picker>
+  </view>
+
+  <!-- 时段选择 -->
+  <view class="card">
+    <text class="text-bold" style="font-size: 30rpx;">预约时段</text>
+    <view class="divider"></view>
+
+    <!-- 可预约时段提示 -->
+    <view wx:if="{{availableRange}}" class="duration-hint" style="margin-bottom: 20rpx;">
+      <text class="text-success text-sm">✓ 可预约时段：{{availableRange}}</text>
+    </view>
+    <view wx:if="{{bookingDate && !availableRange}}" class="duration-hint" style="margin-bottom: 20rpx;">
+      <text class="text-danger text-sm">✗ 该日期暂未开放预约</text>
+    </view>
+
+    <!-- 开始时间 -->
+    <view class="time-row">
+      <text class="time-label">开始时间</text>
+      <picker mode="time" value="{{startTime}}" start="{{availableStart}}" end="{{availableEnd}}" bindchange="onStartTimeChange" disabled="{{!availableRange}}">
+        <view class="picker-field">
+          <text class="{{startTime ? '' : 'text-hint'}}">{{startTime || '请选择'}}</text>
+          <text>🕐</text>
+        </view>
+      </picker>
+    </view>
+
+    <!-- 结束时间 -->
+    <view class="time-row">
+      <text class="time-label">结束时间</text>
+      <picker mode="time" value="{{endTime}}" start="{{startTime || availableStart}}" end="{{availableEnd}}" bindchange="onEndTimeChange" disabled="{{!availableRange}}">
+        <view class="picker-field">
+          <text class="{{endTime ? '' : 'text-hint'}}">{{endTime || '请选择'}}</text>
+          <text>🕐</text>
+        </view>
+      </picker>
+    </view>
+
+    <!-- 时长提示 -->
+    <view wx:if="{{duration > 0}}" class="duration-hint">
+      预计停车 <text class="text-bold">{{duration}}</text> 小时（{{durationMin}}分钟）
+      <text class="text-hint text-sm" style="display:block;margin-top:4rpx;">按30分钟计费，不足30分钟按30分钟计算</text>
+    </view>
+  </view>
+
+  <!-- 当日时段占用 -->
+  <view class="card" wx:if="{{bookingDate}}">
+    <text class="text-bold" style="font-size: 30rpx;">当日时段占用</text>
+    <view class="divider"></view>
+
+    <view wx:if="{{freeSlots.length === 0 && bookedSlots.length === 0}}" class="duration-hint">
+      <text class="text-hint text-sm">该日期暂无分段预约，可在上方选择任意开放时段</text>
+    </view>
+
+    <view wx:if="{{freeSlots.length > 0}}" class="slot-section">
+      <text class="text-success text-sm">✓ 可预约时段（点击快速选择）</text>
+      <view class="slot-wrap">
+        <view class="slot-chip slot-free" wx:for="{{freeSlots}}" wx:key="*this"
+          data-start="{{item[0]}}" data-end="{{item[1]}}" bindtap="onFreeSlotTap">
+          {{item[0]}}~{{item[1]}}
+        </view>
+      </view>
+    </view>
+
+    <view wx:if="{{bookedSlots.length > 0}}" class="slot-section">
+      <text class="text-danger text-sm">✗ 已被预约时段</text>
+      <view class="slot-wrap">
+        <view class="slot-chip slot-busy" wx:for="{{bookedSlots}}" wx:key="*this">{{item[0]}}~{{item[1]}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 费用明细 -->
+  <view class="card" wx:if="{{totalAmount > 0}}">
+    <text class="text-bold" style="font-size: 30rpx;">费用明细</text>
+    <view class="divider"></view>
+    <view class="fee-row">
+      <text class="text-secondary">预约时段计费（停车费）</text>
+      <text>¥{{space.pricePerHour}}/h × {{duration}}h（{{durationMin}}分钟）</text>
+    </view>
+    <view class="fee-row">
+      <text class="text-secondary">占座预付费</text>
+      <text>¥{{reserveFee}}</text>
+    </view>
+    <view class="fee-row">
+      <text class="text-secondary">合计（预约计费 + 占座预付费）</text>
+      <text class="price text-lg">¥{{totalAmount}}</text>
+    </view>
+  </view>
+
+  <!-- 注意事项 -->
+  <view class="notice-card">
+    <text class="text-bold" style="font-size: 26rpx;">⚠️ 注意事项</text>
+    <view class="notice-list">
+      <text class="text-hint text-sm">• 采用「微信小程序虚拟支付·代币模式」：先充值停车币，预约时自动从余额抵扣</text>
+      <text class="text-hint text-sm">• 超时将按双倍价格计费</text>
+      <text class="text-hint text-sm">• 超时会影响个人信用评分</text>
+      <text class="text-hint text-sm">• 余额不足请先去「我的钱包」充值</text>
+    </view>
+  </view>
+</view>
+
+<!-- 余额不足提示 -->
+<view class="occupy-tip" wx:if="{{canPay && insufficient}}">
+  钱包余额 ¥{{balanceText}} 不足以支付本次 ¥{{needText}}，请先充值。
+  <text class="text-success text-bold" bindtap="onGoRecharge">去充值 ➤</text>
+</view>
+
+<!-- 底部支付栏 -->
+<view class="bottom-bar">
+  <view class="price-info">
+    <text class="text-secondary text-sm">合计</text>
+    <text class="price">
+      <text class="price-symbol">¥</text>
+      <text class="price-num">{{totalAmount}}</text>
+    </text>
+    <text class="text-hint text-sm" style="display:block;margin-top:2rpx;">余额 ¥{{balanceText}}</text>
+  </view>
+  <button class="btn btn-primary btn-block" style="width: 360rpx;"
+    disabled="{{!canPay || paying}}" bindtap="onPayTap">
+    {{paying ? '支付中...' : (insufficient ? '余额不足·去充值' : '确认支付')}}
+  </button>
+</view>

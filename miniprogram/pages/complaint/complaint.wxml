@@ -1,0 +1,71 @@
+<!-- 投诉与纠纷页 -->
+<view class="container page-content">
+  <!-- 关联订单信息 -->
+  <view class="card" wx:if="{{orderInfo}}">
+    <text class="text-bold" style="font-size: 30rpx;">关联订单</text>
+    <view class="divider"></view>
+    <view class="info-row">
+      <text class="text-secondary">车位</text>
+      <text>{{orderInfo.communityName}} {{orderInfo.locationDetail}}</text>
+    </view>
+    <view class="info-row">
+      <text class="text-secondary">车位主</text>
+      <text>{{orderInfo.ownerName}}</text>
+    </view>
+    <view class="info-row">
+      <text class="text-secondary">订单号</text>
+      <text class="text-sm">#{{orderInfo.orderId}}</text>
+    </view>
+    <view class="info-row">
+      <text class="text-secondary">预约时间</text>
+      <text class="text-sm">{{orderInfo.startTime}} ~ {{orderInfo.endTime}}</text>
+    </view>
+  </view>
+
+  <view class="card">
+    <text class="text-bold" style="font-size: 30rpx;">提交投诉</text>
+    <view class="divider"></view>
+    <view class="form-item">
+      <text class="form-label">投诉类型</text>
+      <picker mode="selector" range="{{complaintTypes}}" bindchange="onTypeChange">
+        <view class="picker-field">
+          <text>{{complaintTypes[selectedType] || '请选择投诉类型'}}</text>
+          <text>🔽</text>
+        </view>
+      </picker>
+    </view>
+    <view class="form-item">
+      <text class="form-label">详细描述</text>
+      <textarea class="form-textarea" placeholder="请详细描述问题情况（至少10个字）..." value="{{description}}"
+        bindinput="onDescInput" maxlength="500" />
+      <view class="flex-between">
+        <text class="text-danger text-sm" wx:if="{{remaining > 0}}">还需输入{{remaining}}个字</text>
+        <text class="text-hint text-sm" style="margin-left:auto;">{{description.length}}/500</text>
+      </view>
+    </view>
+    <view class="form-item">
+      <text class="form-label">图片凭证（选填，最多3张）</text>
+      <view class="upload-row">
+        <view wx:for="{{photos}}" wx:key="*this" class="upload-item">
+          <image src="{{item}}" mode="aspectFill" class="upload-preview" bindtap="onPreviewPhoto" data-url="{{item}}" />
+          <view class="upload-delete" catchtap="onDeletePhoto" data-index="{{index}}">✕</view>
+        </view>
+        <view class="upload-item upload-add" bindtap="onChooseImage" wx:if="{{photos.length < 3}}">
+          <text class="upload-icon">+</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="notice-card">
+    <text class="text-bold text-sm">⚠️ 投诉须知</text>
+    <text class="text-hint text-sm">• 请如实描述问题，虚假投诉将被扣信用分</text>
+    <text class="text-hint text-sm">• 平台将在1-3个工作日内处理</text>
+    <text class="text-hint text-sm">• 投诉成立将影响对方信用评分</text>
+    <text class="text-hint text-sm">• 提交后订单状态将变为"争议中"</text>
+  </view>
+
+  <button class="btn btn-primary btn-block mt-30" disabled="{{!canSubmit}}" bindtap="onSubmit">
+    提交投诉
+  </button>
+</view>

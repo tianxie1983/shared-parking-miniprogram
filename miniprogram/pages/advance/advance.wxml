@@ -1,0 +1,90 @@
+<!--
+  进阶页：真实微信登录 + 地图选点
+  集中演示两项进阶能力，便于教学与联调验证
+-->
+<view class="container page-content--tabbar">
+  <view class="banner">进阶演示 · 真实微信登录 + 地图选点</view>
+
+  <!-- ① 真实微信登录 -->
+  <view class="card">
+    <text class="text-bold" style="font-size:30rpx;">① 真实微信登录</text>
+    <view class="divider"></view>
+
+    <block wx:if="{{!loggedIn}}">
+      <text class="text-secondary text-sm">点击下方按钮，将调用 wx.login 拿到 code，由后端向微信 jscode2session 换取你的真实 openid。</text>
+      <button class="btn btn-primary mt-20" bindtap="onWechatLogin">微信一键登录</button>
+    </block>
+
+    <block wx:else>
+      <view class="login-row">
+        <text class="text-secondary">openid（脱敏）</text>
+        <text class="mono">{{openidMasked}}</text>
+      </view>
+      <view class="login-row">
+        <text class="text-secondary">token（脱敏）</text>
+        <text class="mono">{{tokenMasked}}</text>
+      </view>
+      <view class="login-row">
+        <text class="text-secondary">登录时间</text>
+        <text>{{loginTime}}</text>
+      </view>
+      <view class="login-row">
+        <text class="text-secondary">当前模式</text>
+        <text class="tag {{mockMode ? 'tag-yellow' : 'tag-green'}}">{{mockMode ? '演示模式（未配AppID）' : '真实微信身份'}}</text>
+      </view>
+
+      <!-- 头像昵称：微信推荐新版做法 -->
+      <view class="divider"></view>
+      <text class="text-bold" style="font-size:28rpx;">设置头像与昵称</text>
+      <view class="flex mt-20 avatar-line">
+        <button class="avatar-btn" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
+          <image wx:if="{{avatarUrl}}" src="{{avatarUrl}}" class="avatar-img"></image>
+          <text wx:else class="text-hint">选头像</text>
+        </button>
+        <input type="nickname" class="nick-input" placeholder="请输入昵称" value="{{nickName}}" bindinput="onNicknameInput" />
+      </view>
+
+      <button class="btn btn-ghost mt-20" bindtap="onLogout">退出登录（本机）</button>
+    </block>
+  </view>
+
+  <!-- ② 地图选点 -->
+  <view class="card">
+    <text class="text-bold" style="font-size:30rpx;">② 地图选点</text>
+    <view class="divider"></view>
+    <text class="text-secondary text-sm">点击「地图选址」用微信原生地图选点，或直接点地图任意位置打点；下方实时显示经纬度与到参照车位的距离。</text>
+    <map
+      class="map"
+      longitude="{{map.longitude}}"
+      latitude="{{map.latitude}}"
+      scale="16"
+      markers="{{map.markers}}"
+      show-location
+      bindtap="onMapTap"
+    ></map>
+    <button class="btn btn-primary mt-20" bindtap="onChooseLocation">地图选址（wx.chooseLocation）</button>
+    <view class="login-row mt-20" wx:if="{{map.address}}">
+      <text class="text-secondary">地址</text>
+      <text class="mono addr">{{map.address}}</text>
+    </view>
+    <view class="login-row" wx:if="{{map.distanceText}}">
+      <text class="text-secondary">距离</text>
+      <text class="text-success">{{map.distanceText}}</text>
+    </view>
+    <view class="login-row" wx:if="{{map.longitude}}">
+      <text class="text-secondary">经纬度</text>
+      <text class="mono">{{map.longitude}}, {{map.latitude}}</text>
+    </view>
+  </view>
+
+  <!-- 说明 -->
+  <view class="card tip">
+    <text class="text-bold text-sm">说明</text>
+    <view class="divider"></view>
+    <view class="tip-item"><text class="text-hint text-sm">· 真实微信登录需在后端 config.json 填入自己的 AppID / AppSecret（见 config.example.json）。</text></view>
+    <view class="tip-item"><text class="text-hint text-sm">· 未配置时自动进入「演示模式」，用 code 派生伪 openid 保证联调可跑。</text></view>
+    <view class="tip-item"><text class="text-hint text-sm">· wx.chooseLocation 需在 app.json 配置 requiredPrivateInfos: ["chooseLocation"]，本项目已配置。</text></view>
+  </view>
+
+  <view style="height:60rpx;"></view>
+</view>

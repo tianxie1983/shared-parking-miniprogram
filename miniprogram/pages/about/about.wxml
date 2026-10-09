@@ -1,0 +1,101 @@
+<!--
+  关于我们
+-->
+<view class="container page-content">
+  <!-- Logo 与名称 -->
+  <view class="about-header">
+    <view class="about-logo">🅿️</view>
+    <text class="about-name">邻里共享停车</text>
+    <text class="about-slogan">让闲置车位创造价值，让停车不再困难</text>
+    <text class="about-version">V1.0.0</text>
+  </view>
+
+  <!-- 平台简介 -->
+  <view class="card">
+    <text class="text-bold text-lg">平台简介</text>
+    <view class="divider"></view>
+    <text class="text-secondary">邻里共享停车是一个基于社区的车位共享平台，旨在盘活城市闲置车位资源，解决"停车难、停车贵"的民生痛点。</text>
+    <view class="mt-20">
+      <text class="text-secondary">车主可以将白天闲置的车位出租给需要停车的人，获取额外收入；需要停车的人可以就近找到高性价比的车位，省时省钱。</text>
+    </view>
+    <view class="mt-20">
+      <text class="text-secondary">平台通过信用评分体系、双重确认机制、在线预约支付等保障交易安全，打造安全、便捷、可信的邻里车位共享生态。</text>
+    </view>
+  </view>
+
+  <!-- 核心功能 -->
+  <view class="card">
+    <text class="text-bold text-lg">核心功能</text>
+    <view class="divider"></view>
+    <view class="feature-item">
+      <text class="feature-icon">📍</text>
+      <view class="flex-1">
+        <text class="text-bold text-sm">LBS智能定位</text>
+        <view class="mt-10">
+          <text class="text-hint text-sm">基于地理位置推荐附近车位，支持地图和列表双视图</text>
+        </view>
+      </view>
+    </view>
+    <view class="feature-item">
+      <text class="feature-icon">📅</text>
+      <view class="flex-1">
+        <text class="text-bold text-sm">时段预约</text>
+        <view class="mt-10">
+          <text class="text-hint text-sm">精确到小时的时段预约，系统自动锁定防冲突</text>
+        </view>
+      </view>
+    </view>
+    <view class="feature-item">
+      <text class="feature-icon">💳</text>
+      <view class="flex-1">
+        <text class="text-bold text-sm">在线支付</text>
+        <view class="mt-10">
+          <text class="text-hint text-sm">微信支付安全便捷，订单状态实时追踪</text>
+        </view>
+      </view>
+    </view>
+    <view class="feature-item">
+      <text class="feature-icon">⭐</text>
+      <view class="flex-1">
+        <text class="text-bold text-sm">信用体系</text>
+        <view class="mt-10">
+          <text class="text-hint text-sm">信用评分约束双方行为，守信激励、失信惩戒</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 版本信息 -->
+  <view class="card">
+    <text class="text-bold text-lg">版本信息</text>
+    <view class="divider"></view>
+    <view class="flex-between version-item">
+      <text class="text-secondary">当前版本</text>
+      <text class="text-hint">V1.0.0</text>
+    </view>
+    <view class="flex-between version-item">
+      <text class="text-secondary">更新时间</text>
+      <text class="text-hint">2026-08-04</text>
+    </view>
+    <view class="flex-between version-item">
+      <text class="text-secondary">服务区域</text>
+      <text class="text-hint">延安市（试点）</text>
+    </view>
+  </view>
+
+  <!-- 联系我们 -->
+  <view class="card">
+    <text class="text-bold text-lg">联系我们</text>
+    <view class="divider"></view>
+    <view class="flex-between version-item" bindtap="onCopyText" data-text="400-000-0000">
+      <text class="text-secondary">客服电话</text>
+      <text class="text-hint">400-000-0000</text>
+    </view>
+    <view class="flex-between version-item" bindtap="onCopyText" data-text="support@parkshare.com">
+      <text class="text-secondary">邮箱</text>
+      <text class="text-hint">support@parkshare.com</text>
+    </view>
+  </view>
+
+  <text class="about-copyright">© 2026 邻里共享停车 | 仅供学习演示使用</text>
+</view>

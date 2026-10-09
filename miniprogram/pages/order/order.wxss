@@ -1,0 +1,66 @@
+/** 订单详情样式 */
+page { padding-bottom: 120rpx; background: var(--bg-page); }
+
+.status-card {
+  padding: 60rpx 40rpx;
+  text-align: center;
+  color: white;
+}
+.status-0 { background: linear-gradient(135deg, #FFC300, #FF9500); }
+.status-1 { background: linear-gradient(135deg, #10AEFF, #007AFF); }
+.status-2 { background: linear-gradient(135deg, #07C160, #00A650); }
+.status-3 { background: linear-gradient(135deg, #8E8E93, #636366); }
+.status-4 { background: linear-gradient(135deg, #FA5151, #DC143C); }
+.status-5 { background: linear-gradient(135deg, #FF6B35, #DC143C); }
+.status-icon { font-size: 72rpx; display: block; margin-bottom: 16rpx; }
+.status-text { font-size: 40rpx; font-weight: bold; display: block; margin-bottom: 8rpx; }
+.status-desc { font-size: 24rpx; opacity: 0.9; }
+
+.order-img {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: var(--radius);
+  background: #f0f0f0;
+  flex-shrink: 0;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18rpx 0;
+  border-bottom: 1rpx solid #f5f5f5;
+}
+.info-row:last-child { border-bottom: none; }
+
+.action-area { padding: 0 20rpx 40rpx; }
+.overtime-warning {
+  padding: 20rpx;
+  background: #FFF8E8;
+  border-radius: var(--radius);
+  font-size: 24rpx;
+  color: #C78D00;
+  margin-top: 20rpx;
+}
+.overtime-danger {
+  background: #FDE8E8;
+  color: var(--danger);
+}
+
+.parking-timer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24rpx;
+  padding-bottom: calc(24rpx + env(safe-area-inset-bottom));
+  background: var(--bg-card);
+  border-top: 2rpx solid var(--primary);
+  gap: 16rpx;
+  z-index: 100;
+}
+.timer-label { font-size: 24rpx; color: var(--text-hint); }
+.timer-count { font-size: 48rpx; font-weight: bold; color: var(--primary); font-family: 'DIN', monospace; }

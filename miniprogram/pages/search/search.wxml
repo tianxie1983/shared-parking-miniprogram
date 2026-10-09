@@ -1,0 +1,63 @@
+<!--
+  搜索页 - 按小区名/地址搜索车位
+-->
+<view class="container">
+  <!-- 搜索头部 -->
+  <view class="search-header">
+    <view class="search-input-wrap">
+      <text class="search-icon">🔍</text>
+      <input class="search-input" type="text" placeholder="搜索小区名、地址或标签"
+        value="{{keyword}}" focus="{{autoFocus}}" bindinput="onInput" bindconfirm="onSearch" confirm-type="search" />
+      <text wx:if="{{keyword}}" class="search-clear" bindtap="onClear">✕</text>
+    </view>
+    <text class="search-cancel" bindtap="onCancel">取消</text>
+  </view>
+
+  <!-- 搜索历史 -->
+  <view wx:if="{{!searched && historyList.length > 0}}" class="history-section">
+    <view class="history-header">
+      <text class="text-bold">搜索历史</text>
+      <text class="text-hint" bindtap="onClearHistory">清空</text>
+    </view>
+    <view class="history-tags">
+      <view class="history-tag" wx:for="{{historyList}}" wx:key="*this" bindtap="onHistoryTap" data-keyword="{{item}}">
+        {{item}}
+      </view>
+    </view>
+  </view>
+
+  <!-- 热门搜索 -->
+  <view wx:if="{{!searched && hotKeywords.length > 0}}" class="hot-section">
+    <text class="text-bold">热门搜索</text>
+    <view class="history-tags">
+      <view class="history-tag" wx:for="{{hotKeywords}}" wx:key="*this" bindtap="onHistoryTap" data-keyword="{{item}}">
+        {{item}}
+      </view>
+    </view>
+  </view>
+
+  <!-- 搜索结果 -->
+  <view wx:if="{{searched}}" class="result-section">
+    <view class="result-header">
+      <text class="text-secondary">找到 {{resultList.length}} 个车位</text>
+    </view>
+    <view wx:if="{{resultList.length > 0}}">
+      <parking-card wx:for="{{resultList}}" wx:key="spaceId"
+        space-id="{{item.spaceId}}"
+        image="{{item.photos[0]}}"
+        community-name="{{item.communityName}}"
+        location-detail="{{item.locationDetail}}"
+        distance="{{item.distance}}"
+        price-per-hour="{{item.pricePerHour}}"
+        rating="{{item.rating}}"
+        success-rate="{{item.successRate}}"
+        is-certified="{{item.auditStatus === 1}}"
+        tags="{{item.tags}}"
+        available-time="{{item.availableTime}}"
+        bind:tap="onSpaceTap"
+      />
+    </view>
+    <empty-state wx:if="{{resultList.length === 0}}" icon="🔍" text="没有找到相关车位"
+      btn-text="换个关键词试试" bind:action="onReset" />
+  </view>
+</view>

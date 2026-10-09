@@ -1,0 +1,36 @@
+name: Deploy Shared Parking Backend
+
+# 经 GitHub 实现后端服务的持续部署：
+#   1) 每次 push 到 main/master 先做语法校验(lint)
+#   2) 若仓库配置了 Secret RENDER_DEPLOY_HOOK，则触发 Render 自动部署
+# 想要换成 Heroku / Railway / Fly.io / 自有服务器，只需把 deploy 步骤替换为对应命令即可。
+#
+# 说明：可部署的后端目录是仓库内的 server/（Render/Heroku 的 Root Directory 设为 server/），
+# 因此校验前先 cd server。
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: 语法检查
+        run: cd server && node --check server.js
+
+  deploy:
+    needs: lint
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    steps:
+      - name: 触发 Render 部署钩子
+        if: ${{ secrets.RENDER_DEPLOY_HOOK != '' }}
+        run: curl -fsS -X POST "$RENDER_DEPLOY_HOOK"
+      - name: 未配置部署钩子
+        if: ${{ secrets.RENDER_DEPLOY_HOOK == '' }}
+        run: echo "未配置 RENDER_DEPLOY_HOOK，跳过自动部署。请参考根目录 README.md「经 GitHub 部署」一节配置。"

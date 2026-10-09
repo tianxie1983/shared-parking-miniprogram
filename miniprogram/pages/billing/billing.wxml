@@ -1,0 +1,20 @@
+<!-- 计费说明规则 -->
+<view class="container page-content">
+  <view class="card intro-card">
+    <text class="text-bold text-lg">💰 计费说明规则</text>
+    <view class="divider"></view>
+    <text class="text-secondary text-sm">本说明对应《声明与免责条款》中提及的《计费规则说明》，与订单实际算费口径一致。最终费用以订单页面展示为准。</text>
+  </view>
+
+  <view class="card" wx:for="{{sections}}" wx:key="title">
+    <text class="text-bold text-base">{{item.title}}</text>
+    <view class="divider"></view>
+    <text class="text-secondary text-sm">{{item.body}}</text>
+  </view>
+
+  <view class="card tip-card">
+    <text class="text-hint text-xs">如与免责声明、订单页面存在理解差异，以平台实际结算账单为准；如有争议，可在「我的-投诉记录」中申诉。</text>
+  </view>
+
+  <view style="height: 60rpx;"></view>
+</view>

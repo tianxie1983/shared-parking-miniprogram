@@ -1,0 +1,35 @@
+.faq-item { padding: 24rpx 0; }
+.faq-answer { padding: 16rpx 0; }
+
+.guide-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 20rpx 0;
+}
+.guide-icon { font-size: 40rpx; margin-right: 20rpx; }
+
+.feedback-type {
+  display: flex;
+  gap: 16rpx;
+  margin-bottom: 20rpx;
+}
+.feedback-tag {
+  background: var(--bg-page);
+  border-radius: 28rpx;
+  padding: 12rpx 28rpx;
+  font-size: 26rpx;
+  color: var(--text-secondary);
+}
+.feedback-tag.active {
+  background: #E8F8EF;
+  color: var(--primary);
+}
+.feedback-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--bg-page);
+  border-radius: var(--radius);
+  padding: 24rpx;
+  font-size: 28rpx;
+  min-height: 200rpx;
+}

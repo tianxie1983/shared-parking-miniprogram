@@ -1,0 +1,2 @@
+/* auth page reuse shared form styles */
+@import '/styles/form.wxss';

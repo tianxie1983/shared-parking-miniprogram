@@ -1,0 +1,75 @@
+<!--
+  首页 - 车位浏览（LBS定位）
+  功能：定位 + 车位列表/地图切换 + 筛选（价格/距离）
+  对应方案：三.MVP核心功能清单 - 3.1 用户端 车位浏览
+-->
+<view class="container page-content--tabbar">
+  <!-- 搜索头部 -->
+  <view class="search-bar">
+    <view class="search-input" bindtap="onSearchTap">
+      <text class="search-icon">🔍</text>
+      <text class="search-placeholder">搜索小区或地址</text>
+    </view>
+    <view class="view-toggle" bindtap="onToggleView">
+      <text class="toggle-icon">{{viewMode === 'list' ? '🗺️' : '📋'}}</text>
+    </view>
+  </view>
+
+  <!-- 筛选栏 -->
+  <view class="filter-bar">
+    <view class="filter-item {{filterType === 'price' ? 'active' : ''}}" bindtap="onFilterTap" data-type="price">
+      <text>价格 {{priceOrder === 'asc' ? '↑' : priceOrder === 'desc' ? '↓' : ''}}</text>
+    </view>
+    <view class="filter-item {{filterType === 'distance' ? 'active' : ''}}" bindtap="onFilterTap" data-type="distance">
+      <text>距离 {{sortByDistance ? '↑' : ''}}</text>
+    </view>
+    <view class="filter-item {{filterType === 'cert' ? 'active' : ''}}" bindtap="onFilterTap" data-type="cert">
+      <text>已认证</text>
+    </view>
+    <view class="filter-item" bindtap="onRefresh">
+      <text>🔄</text>
+    </view>
+  </view>
+
+  <!-- 列表模式 -->
+  <scroll-view wx:if="{{viewMode === 'list'}}" class="parking-list" scroll-y enhanced
+    show-scrollbar="{{false}}" refresher-enabled refresher-triggered="{{refreshing}}"
+    bindrefresherrefresh="onPullRefresh" bindscrolltolower="onLoadMore">
+    <parking-card wx:for="{{parkingList}}" wx:key="spaceId"
+      space-id="{{item.spaceId}}"
+      image="{{item.photos[0]}}"
+      community-name="{{item.communityName}}"
+      location-detail="{{item.locationDetail}}"
+      distance="{{item.distance}}"
+      price-per-hour="{{item.pricePerHour}}"
+      rating="{{item.rating}}"
+      success-rate="{{item.successRate}}"
+      is-certified="{{item.auditStatus === 1}}"
+      tags="{{item.tags}}"
+      available-time="{{item.availableTime}}"
+      bind:tap="onSpaceTap"
+    />
+    <view wx:if="{{!hasMore}}" class="load-more">— 没有更多了 —</view>
+  </scroll-view>
+
+  <!-- 地图模式 -->
+  <map wx:if="{{viewMode === 'map'}}" id="parkingMap"
+    class="parking-map"
+    longitude="{{longitude}}"
+    latitude="{{latitude}}"
+    scale="15"
+    markers="{{markers}}"
+    show-location="{{true}}"
+    bindmarkertap="onMarkerTap"
+    bindregionchange="onMapRegionChange">
+  </map>
+
+  <!-- 空状态 -->
+  <empty-state wx:if="{{parkingList.length === 0 && !loading}}" icon="🚗" text="附近暂无可用车位"
+    btn-text="刷新试试" bind:action="onRefresh" />
+
+  <!-- 加载中 -->
+  <view wx:if="{{loading}}" class="flex-center" style="padding: 100rpx 0;">
+    <text class="text-hint">正在搜索附近车位...</text>
+  </view>
+</view>

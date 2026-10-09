@@ -1,0 +1,16 @@
+# 系统 / 编辑器
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
+
+# 依赖（后端零依赖，但保险起见忽略）
+node_modules/
+
+# 日志
+*.log
+
+# 本地密钥与运行数据（勿提交；用各自 example 作模板）
+server/config.json
+server/data.json

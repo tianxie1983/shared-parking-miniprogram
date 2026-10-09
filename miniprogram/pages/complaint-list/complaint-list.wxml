@@ -1,0 +1,62 @@
+<!-- 投诉记录页 -->
+<view class="container page-content">
+  <view wx:if="{{list.length === 0 && !loading}}" class="empty-wrapper">
+    <text class="empty-icon">📋</text>
+    <text class="empty-text">暂无投诉记录</text>
+  </view>
+
+  <view wx:for="{{list}}" wx:key="complaintId" class="card complaint-card">
+    <!-- 头部 -->
+    <view class="flex-between">
+      <text class="text-bold">{{item.typeName}}</text>
+      <text class="tag {{item.statusClass}}">{{item.statusText}}</text>
+    </view>
+    <view class="divider"></view>
+
+    <!-- 投诉信息 -->
+    <view class="info-row">
+      <text class="text-hint">车位主</text>
+      <text class="text-secondary">{{item.ownerName}} - {{item.communityName}}</text>
+    </view>
+    <view class="info-row" wx:if="{{item.orderId}}">
+      <text class="text-hint">关联订单</text>
+      <text class="text-secondary">#{{item.orderId}}</text>
+    </view>
+    <view class="info-row">
+      <text class="text-hint">提交时间</text>
+      <text class="text-secondary">{{item.submitTime}}</text>
+    </view>
+
+    <!-- 投诉内容 -->
+    <view class="complaint-desc">
+      <text class="text-hint text-sm">投诉内容：</text>
+      <text class="text-secondary text-sm">{{item.description}}</text>
+    </view>
+
+    <!-- 图片凭证 -->
+    <view class="photo-row" wx:if="{{item.photos && item.photos.length > 0}}">
+      <image wx:for="{{item.photos}}" wx:for-item="photo" wx:key="*this"
+        src="{{photo}}" mode="aspectFill" class="complaint-photo"
+        bindtap="onPreviewPhoto" data-url="{{photo}}" data-urls="{{item.photos}}" />
+    </view>
+
+    <!-- 处理结果 -->
+    <view wx:if="{{item.status !== 'pending'}}" class="result-box">
+      <view class="info-row">
+        <text class="text-hint">处理时间</text>
+        <text class="text-secondary">{{item.resolveTime}}</text>
+      </view>
+      <view class="result-text">
+        <text class="text-bold text-sm">处理结果：</text>
+        <text class="text-secondary text-sm">{{item.result}}</text>
+      </view>
+    </view>
+
+    <!-- 处理中提示 -->
+    <view wx:if="{{item.status === 'pending'}}" class="pending-hint">
+      <text class="text-hint text-sm">⏳ 商家正在处理中，请耐心等待</text>
+    </view>
+  </view>
+
+  <view style="height: 60rpx;"></view>
+</view>

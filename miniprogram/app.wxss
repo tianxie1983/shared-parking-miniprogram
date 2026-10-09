@@ -1,0 +1,202 @@
+/**
+ * 全局样式 - 邻里共享停车
+ */
+page {
+  --primary: #07C160;
+  --primary-dark: #06AD56;
+  --danger: #FA5151;
+  --warning: #FFC300;
+  --info: #10AEFF;
+  --text-primary: #1A1A1A;
+  --text-secondary: #666666;
+  --text-hint: #999999;
+  --bg-page: #F5F5F5;
+  --bg-card: #FFFFFF;
+  --border: #E5E5E5;
+  --radius: 12rpx;
+
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
+    'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  font-size: 28rpx;
+  color: var(--text-primary);
+  background: var(--bg-page);
+  line-height: 1.6;
+}
+
+/* ---- 布局 ---- */
+.container {
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+.page-content {
+  padding: 20rpx;
+}
+.page-content--tabbar {
+  padding-bottom: 120rpx;
+}
+
+/* ---- 卡片 ---- */
+.card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
+}
+
+/* ---- 按钮 ---- */
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 88rpx;
+  border-radius: var(--radius);
+  font-size: 30rpx;
+  font-weight: 500;
+  border: none;
+  padding: 0 30rpx;
+}
+.btn::after { border: none; }
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+}
+.btn-danger {
+  background: var(--danger);
+  color: #fff;
+}
+.btn-outline {
+  background: #fff;
+  color: var(--primary);
+  border: 2rpx solid var(--primary);
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 2rpx solid var(--border);
+}
+.btn-block { width: 100%; }
+.btn-sm {
+  height: 64rpx;
+  font-size: 26rpx;
+  padding: 0 24rpx;
+}
+.btn-disabled {
+  background: #ccc;
+  color: #fff;
+  pointer-events: none;
+}
+
+/* ---- 标签 ---- */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 4rpx 16rpx;
+  border-radius: 6rpx;
+  font-size: 22rpx;
+  line-height: 1.5;
+}
+.tag-green { background: #E8F8EF; color: var(--primary); }
+.tag-red { background: #FDE8E8; color: var(--danger); }
+.tag-yellow { background: #FFF8E8; color: #C78D00; }
+.tag-blue { background: #E8F4FD; color: var(--info); }
+.tag-orange { background: #FFF1E6; color: #E8740C; }
+.tag-gray { background: #F0F0F0; color: var(--text-hint); }
+
+/* ---- 文本 ---- */
+.text-primary { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-hint { color: var(--text-hint); }
+.text-danger { color: var(--danger); }
+.text-warning { color: #E8740C; }
+.text-success { color: var(--primary); }
+.text-center { text-align: center; }
+.text-bold { font-weight: bold; }
+.text-sm { font-size: 24rpx; }
+.text-lg { font-size: 36rpx; }
+
+.price {
+  color: var(--danger);
+  font-weight: bold;
+  font-family: 'DIN', 'PingFang SC', sans-serif;
+}
+.price-symbol { font-size: 24rpx; }
+.price-num { font-size: 40rpx; }
+.price-unit { font-size: 22rpx; color: var(--text-hint); font-weight: normal; }
+
+/* ---- 弹性布局 ---- */
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.flex-1 { flex: 1; }
+.flex-center { display: flex; align-items: center; justify-content: center; }
+.flex-between { display: flex; align-items: center; justify-content: space-between; }
+.flex-wrap { flex-wrap: wrap; }
+
+/* ---- 间距 ---- */
+.mt-20 { margin-top: 20rpx; }
+.mt-30 { margin-top: 30rpx; }
+.mb-20 { margin-bottom: 20rpx; }
+.mb-30 { margin-bottom: 30rpx; }
+.p-20 { padding: 20rpx; }
+.p-30 { padding: 30rpx; }
+
+/* ---- 分割线 ---- */
+.divider { height: 1rpx; background: var(--border); margin: 20rpx 0; }
+
+/* ---- 空状态 ---- */
+.empty-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120rpx 0;
+}
+.empty-icon { font-size: 120rpx; color: #ddd; margin-bottom: 20rpx; }
+.empty-text { color: var(--text-hint); font-size: 28rpx; }
+
+/* ---- 加载更多 ---- */
+.load-more {
+  text-align: center;
+  padding: 40rpx 0;
+  color: var(--text-hint);
+  font-size: 24rpx;
+}
+
+/* ---- 占用提示 ---- */
+.occupy-tip {
+  margin: 20rpx 24rpx 0;
+  padding: 20rpx 24rpx;
+  background: #FFF1E6;
+  border: 1rpx solid #FFD8B0;
+  border-radius: 12rpx;
+  color: #E8740C;
+  font-size: 24rpx;
+  line-height: 1.6;
+}
+
+/* ---- 当日时段占用（可预约/已预约 chips） ---- */
+.slot-section {
+  margin-top: 16rpx;
+}
+.slot-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+  margin-top: 12rpx;
+}
+.slot-chip {
+  padding: 12rpx 22rpx;
+  border-radius: 999rpx;
+  font-size: 24rpx;
+  line-height: 1.4;
+}
+.slot-free {
+  background: #E8F8EF;
+  color: #07A14B;
+  border: 1rpx solid #9FE3BE;
+}
+.slot-busy {
+  background: #FDECEC;
+  color: #D9534F;
+  border: 1rpx solid #F5C2C2;
+}

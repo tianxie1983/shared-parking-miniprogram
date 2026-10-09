@@ -1,0 +1,101 @@
+<!--
+  车位详情页
+  对应方案：三.MVP核心功能清单 - 3.1 用户端 - 车位详情
+  展示：图片、地址、时段、价格、历史预约成功率、评价
+-->
+<view class="container">
+  <!-- 图片轮播 -->
+  <swiper class="swiper" indicator-dots indicator-color="#ccc" indicator-active-color="#07C160" autoplay>
+    <swiper-item wx:for="{{space.photos}}" wx:key="*this">
+      <image src="{{item}}" mode="aspectFill" class="swiper-img" />
+    </swiper-item>
+  </swiper>
+
+  <!-- 信息卡片 -->
+  <view class="page-content">
+    <!-- 小区信息 -->
+    <view class="card">
+      <view class="flex-between mb-20">
+        <text class="text-lg text-bold">{{space.communityName}}</text>
+        <view class="flex">
+          <text class="tag tag-green" wx:if="{{space.auditStatus === 1}}">已认证</text>
+          <text class="tag tag-blue" wx:if="{{bookedToday.length > 0}}">今日有已约时段</text>
+        </view>
+      </view>
+
+      <view class="flex mb-10">
+        <text>📍</text>
+        <text class="text-secondary" style="margin-left: 8rpx;">{{space.locationDetail}}</text>
+      </view>
+      <view class="flex mb-10">
+        <text>📌</text>
+        <text class="text-secondary" style="margin-left: 8rpx;">{{space.address}}</text>
+      </view>
+
+      <view class="divider"></view>
+
+      <!-- 统计信息 -->
+      <view class="stats-row">
+        <view class="stat-item">
+          <text class="stat-num">{{space.rating}}</text>
+          <text class="stat-label">评分</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-num">{{space.orderCount}}</text>
+          <text class="stat-label">已预约</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-num">{{space.successRate * 100}}%</text>
+          <text class="stat-label">成功率</text>
+        </view>
+      </view>
+
+      <!-- 标签 -->
+      <view class="flex" style="gap: 12rpx;">
+        <text class="tag tag-gray" wx:for="{{space.tags}}" wx:key="*this">{{item}}</text>
+      </view>
+    </view>
+
+    <!-- 可预约时段 -->
+    <view class="card">
+      <text class="text-bold" style="font-size: 30rpx;">可预约时段</text>
+      <view class="divider"></view>
+      <view class="schedule-list">
+        <view class="schedule-item" wx:for="{{space.schedules}}" wx:key="weekday">
+          <text class="text-secondary">{{weekdayMap[item.weekday]}}</text>
+          <text class="text-bold">{{item.startTime}} - {{item.endTime}}</text>
+          <text class="price text-sm">¥{{item.pricePerHour}}/h</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 车主信息 -->
+    <view class="card">
+      <text class="text-bold" style="font-size: 30rpx;">车位主</text>
+      <view class="divider"></view>
+      <view class="flex">
+        <text>👤 {{space.ownerName}}</text>
+        <text class="tag tag-blue" style="margin-left: 16rpx;" wx:if="{{space.creditScore}}">信用分 {{space.creditScore}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部预约栏 -->
+  <view class="bottom-bar">
+    <view class="price-info">
+      <text class="price">
+        <text class="price-symbol">¥</text>
+        <text class="price-num">{{space.pricePerHour}}</text>
+      </text>
+      <text class="price-unit">/小时</text>
+    </view>
+    <button class="btn btn-primary btn-block" style="width: 400rpx;" bindtap="onBookTap">
+      立即预约
+    </button>
+  </view>
+
+  <!-- 今日已约时段提示 -->
+  <view wx:if="{{bookedToday.length > 0}}" class="occupy-tip">
+    今日已被预约时段：<text class="text-bold">{{bookedToday}}</text>（其余时段仍可预约，确认离场后该时段自动释放）
+  </view>
+</view>

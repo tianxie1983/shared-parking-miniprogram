@@ -1,0 +1,53 @@
+<!--
+  车位卡片组件
+  适用：首页列表、订单关联车位展示
+-->
+<view class="parking-card" bindtap="onTapCard" hover-class="card-hover">
+  <!-- 左侧图片 -->
+  <view class="card-image">
+    <image src="{{image}}" mode="aspectFill" class="img" />
+    <view class="card-rating" wx:if="{{showRating && rating}}">
+      <text class="rating-text">{{rating}}</text>
+    </view>
+  </view>
+
+  <!-- 右侧信息 -->
+  <view class="card-body">
+    <!-- 小区名称 + 标签 -->
+    <view class="card-header">
+      <text class="community-name">{{communityName}}</text>
+      <view class="card-tags">
+        <text class="tag tag-green" wx:for="{{tags}}" wx:key="*this" wx:for-index="i">
+          {{item}}
+        </text>
+      </view>
+    </view>
+
+    <!-- 位置描述 -->
+    <view class="card-location">
+      <text class="iconfont">📍</text>
+      <text class="location-text">{{locationDetail}}</text>
+      <text class="distance" wx:if="{{distance}}">{{distance}}</text>
+    </view>
+
+    <!-- 认证标签 -->
+    <view class="card-cert" wx:if="{{showCert && isCertified}}">
+      <text class="tag tag-blue">✓ 已认证</text>
+      <text class="tag tag-gray" wx:if="{{successRate}}">成功率 {{successRate}}%</text>
+    </view>
+
+    <!-- 底部：时段 + 价格 -->
+    <view class="card-footer">
+      <view class="schedule-info" wx:if="{{showSchedule}}">
+        <text class="text-hint text-sm">{{availableTime}}</text>
+      </view>
+      <view class="price-info">
+        <text class="price">
+          <text class="price-symbol">¥</text>
+          <text class="price-num">{{pricePerHour}}</text>
+        </text>
+        <text class="price-unit">/小时</text>
+      </view>
+    </view>
+  </view>
+</view>

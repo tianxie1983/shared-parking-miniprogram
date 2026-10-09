@@ -1,0 +1,62 @@
+<!-- 我的车位管理页 -->
+<view class="container page-content">
+  <!-- 统计概览 -->
+  <view class="stats-bar">
+    <view class="stat-item">
+      <text class="stat-num">{{spaces.length}}</text>
+      <text class="stat-label">总车位</text>
+    </view>
+    <view class="stat-item">
+      <text class="stat-num text-success">{{approvedCount}}</text>
+      <text class="stat-label">已上架</text>
+    </view>
+    <view class="stat-item">
+      <text class="stat-num text-warning">{{pendingCount}}</text>
+      <text class="stat-label">待审核</text>
+    </view>
+    <view class="stat-item">
+      <text class="stat-num text-danger">{{rejectedCount}}</text>
+      <text class="stat-label">已驳回</text>
+    </view>
+  </view>
+
+  <!-- 车位列表 -->
+  <view wx:if="{{spaces.length === 0 && !loading}}" class="empty-wrapper">
+    <text class="empty-icon">🅿️</text>
+    <text class="empty-text">暂无发布的车位</text>
+    <button class="btn btn-primary btn-sm mt-20" bindtap="onPublish">立即发布车位</button>
+  </view>
+
+  <view wx:for="{{spaces}}" wx:key="spaceId" class="card space-card">
+    <view class="flex-between">
+      <text class="text-bold text-lg">{{item.communityName}}</text>
+      <text class="tag {{item.auditStatus === 1 ? 'tag-green' : item.auditStatus === 0 ? 'tag-yellow' : 'tag-red'}}">
+        {{item.auditStatus === 1 ? '已上架' : item.auditStatus === 0 ? '审核中' : '已驳回'}}
+      </text>
+    </view>
+    <view class="divider"></view>
+    <view class="space-info">
+      <view class="info-row"><text class="text-hint">位置</text><text class="text-secondary">{{item.locationDetail}}</text></view>
+      <view class="info-row"><text class="text-hint">地址</text><text class="text-secondary">{{item.address}}</text></view>
+      <view class="info-row"><text class="text-hint">价格</text><text class="price">¥{{item.pricePerHour}}/小时</text></view>
+      <view class="info-row" wx:if="{{item.auditStatus === 1}}">
+        <text class="text-hint">评分</text>
+        <text class="text-secondary">⭐ {{item.rating || '暂无'}} · {{item.orderCount || 0}}单</text>
+      </view>
+      <view class="info-row" wx:if="{{item.auditStatus === 0}}">
+        <text class="text-hint">提交时间</text><text class="text-secondary">{{item.submitTime}}</text>
+      </view>
+    </view>
+    <!-- 操作按钮 -->
+    <view class="divider"></view>
+    <view class="flex-between">
+      <button class="btn btn-ghost btn-sm flex-1" style="margin-right:16rpx;" bindtap="onEditSpace" data-id="{{item.spaceId}}">编辑</button>
+      <button class="btn {{item.status === 1 ? 'btn-outline' : 'btn-primary'}} btn-sm flex-1" bindtap="onToggleStatus" data-id="{{item.spaceId}}" data-status="{{item.status}}" wx:if="{{item.auditStatus === 1}}">
+        {{item.status === 1 ? '下架' : '上架'}}
+      </button>
+      <button class="btn btn-primary btn-sm flex-1" bindtap="onPublish" wx:else>重新发布</button>
+    </view>
+  </view>
+
+  <view style="height: 60rpx;"></view>
+</view>
