@@ -9,7 +9,7 @@ App({
     userInfo: null,
     isAuth: false,
     creditScore: 100,
-    baseUrl: 'https://YOUR-BACKEND-ONRENDER.com', // 部署后端后替换为你的公网地址（见项目根 README）
+    baseUrl: 'https://shared-parking-miniprogram-production.up.railway.app', // 部署后端后替换为你的公网地址（见项目根 README）
     userId: null,
     token: null
   },

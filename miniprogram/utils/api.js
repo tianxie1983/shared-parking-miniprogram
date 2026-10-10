@@ -10,7 +10,7 @@ const app = getApp()
 // 部署后，请将 app.js 的 globalData.baseUrl 替换为你的后端公网地址（如 https://your-app.onrender.com）。
 const USE_MOCK = false
 
-const BASE_URL = app?.globalData?.baseUrl || 'https://YOUR-BACKEND-ONRENDER.com'
+const BASE_URL = app?.globalData?.baseUrl || 'https://shared-parking-miniprogram-production.up.railway.app'
 
 // 客户端类型：user / merchant
 const CLIENT_TYPE = 'user'
