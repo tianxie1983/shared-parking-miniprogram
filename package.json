@@ -1,0 +1,12 @@
+{
+  "name": "shared-parking-miniprogram",
+  "version": "1.0.0",
+  "description": "共享停车小程序（仓库根：部署时 npm start 直接拉起 server/ 下的后端）",
+  "scripts": {
+    "start": "node server/server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "private": true
+}
